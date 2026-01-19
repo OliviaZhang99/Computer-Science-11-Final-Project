@@ -1,22 +1,9 @@
 # Olivia Kelli
-# Import tkinter for GUI
 import tkinter as tk
-
-# Import random to pick words
 import random
-
-# Import time to time the test
 import time
-
-
-# -----------------------------
 # Constants (easy to change)
-# -----------------------------
-
-# Font for most text
 FONT = ("Arial", 12)
-
-# Bigger font for the title
 FONT_TITLE = ("Arial", 16, "bold")
 
 # Padding values
@@ -26,12 +13,7 @@ PAD_X = 8
 # How many words per test
 WORDS_PER_TEST = 25
 
-
-# -----------------------------
-# Word lists (no files, no json)
-# -----------------------------
-
-# Easy words
+# Word (easy, medium and hard)
 WORDS_EASY = [
     "book", "they", "begin", "little", "around", "need", "any",
     "head", "than", "seem", "call", "she", "how",
@@ -54,10 +36,6 @@ WORDS_EASY = [
     
 ]
 
-# Medium words
-# Kelli, delete those words just put in random words, dont have to be cs related.
-# BUDDY< JUST USE RANDOM WORD GE NERA i like thinking of random words 
-# Fuck you thenwhat is fun bro like the words that come to mind or its in front of me
 WORDS_MEDIUM = [
     "keyboard", "computer", "potato", "development", "interface", "performance",
     "accuracy", "increase", "challenge", "practice", "improvement", "develop", "learning",
@@ -85,8 +63,6 @@ WORDS_MEDIUM = [
     "perservance", "quarantine", "entrepreneur", "camouflage"
 ]
 
-# Hard words
-# This one too, aim around 100 words each if possible
 WORDS_HARD = [
     "synchronization", "implementation", "characteristic", "responsibility", "configuration",
     "interpretation", "communication", "approximation", "compatibility", "visualization", "pomegrante", "mangosteen"
@@ -109,10 +85,7 @@ WORDS_HARD = [
     "radioimmunoelectrophoresis", "immunoelectrophoretically", "electroencephalographically",
 ]
 
-
-# -----------------------------
 # App state (globals)
-# -----------------------------
 
 # Current difficulty
 difficulty = "easy"
@@ -131,9 +104,6 @@ test_running = False
 leaderboard = []
 
 
-# -----------------------------
-# Bunch of defs
-# -----------------------------
 
 # Pick the correct list based on difficulty
 def get_word_list():
@@ -250,9 +220,6 @@ def refresh_leaderboard():
     leaderboard_box.config(state="disabled")
 
 
-# -----------------------------
-# Button commands
-# -----------------------------
 
 # Set difficulty to easy
 def set_easy():
@@ -414,7 +381,7 @@ target_display.config(state="disabled")
 input_label = tk.Label(root, text="Type here:", font=FONT)
 input_label.pack(pady=PAD_Y)
 
-input_box = tk.Entry(root, font=FONT, width=60)
+input_box = tk.Entry(root, height=6, font=FONT, width=60)
 input_box.pack(pady=PAD_Y)
 
 
@@ -446,3 +413,9 @@ leaderboard_box.config(state="disabled")
 
 # Run the tkinter loop
 root.mainloop()
+
+make sure that the code used is in cs11 stuff 
+display text = typed text instead of the finish button. basically it will know that the user finished typuing, then the finish button turns into a fish and starts zooming around away from the user's cursor,'
+' only ablt to catch wen you are make the fish go in a corner and the fish can't escape, make the fish more flexibly and quick so the users can't cath it until they put it at the corner. And make that thefish
+can't go outside of the window open of tkinter. set colour of fish to how fast the user types 0-20 wpm = blue 21-40 = green 41-60 = yellow 61-80 orange 81-100 = red anything equal or above 101 wpm the fish changes 
+colour every 2 sec looping among all the colours
