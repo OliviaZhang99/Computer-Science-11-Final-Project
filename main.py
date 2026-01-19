@@ -50,14 +50,8 @@ WORDS_EASY = [
     "field", "meadow", "glacier", "volcano", "jungle", "swamp", "marsh", "lagoon", "reef", "delta", 
     "bay", "gulf", "cape", "peninsula", "isthmus", "plateau", "prairie", "savanna", "tundra", "steppe", 
     "jacket", "shirt", "pants", "shoes", "socks", "hat", "gloves", "scarf", "belt", "tie", "dress", "skirt", "sneakers", "boots", 
-    "sandals", "slippers", "suit", "uniform", "apron", "cape", "hood", "pajamas", "robe", "vest", "watch", "bracelet", "necklace", "ring",
-    "earrings", "crown", "tiara", "glasses", "sunglasses", "backpack", "purse", "wallet", "briefcase", "luggage", "umbrella",
-    "camera", "phone", "tablet", "laptop", "desktop", "monitor", "keyboard", "mouse", "printer", "scanner", 
-    "speaker", "headphones", "microphone", "charger", "cable", "adapter", "router", "modem", "projector", "television", 
-    "radio", "clock", "calendar", "map", "compass", "flashlight", "binoculars", "telescope", "microscope", "thermometer", 
-    "barometer", "seismometer", "anemometer", "hygrometer", "altimeter", "speedometer", "odometer", "tachometer",, 
-    "fuel", "engine", "brake", "steering", "wheel", "tire", "axle", "chassis", "transmission", "radiator",
-    "battery", "exhaust", "suspension", "clutch", "differential", "ignition", "carburetor", "catalyst", "muffler", "windshield", "headlight"
+    "sandals", "slippers", "suit", "uniform", "apron", "cape", "hood", "pyjamas", "robe", "vest", "watch", "bracelet", "necklace", "ring",
+    
 ]
 
 # Medium words
@@ -80,8 +74,15 @@ WORDS_MEDIUM = [
     "waterfall", "yesterday", "zookeeper", "alligator", "balloon", "caterpillar", "dolphin", "earthquake",
     "fountain", "grasshopper", "hurricane", "jigsaw", "koala", "labrador", "marshmallow", "nectarine",
     "octopus", "popsicle", "quokka", "rhinoceros", "saxophone", "toothbrush", "umbrella", "vegetable",
-    "whirlpool", "xenophobia", "yogurt", "zeppelin", "adventure", "bicycle", "carnival", "dandelion", "evergreen"
-    "perservance", "quarantine", "entrepreneur", "camofla"
+    "whirlpool", "xenophobia", "yogurt", "zeppelin", "adventure", "bicycle", "carnival", "dandelion", "evergreen",
+    "earrings", "crown", "tiara", "glasses", "sunglasses", "backpack", "purse", "wallet", "briefcase", "luggage", "umbrella",
+    "camera", "phone", "tablet", "laptop", "desktop", "monitor", "keyboard", "mouse", "printer", "scanner", 
+    "speaker", "headphones", "microphone", "charger", "cable", "adapter", "router", "modem", "projector", "television", 
+    "radio", "clock", "calendar", "map", "compass", "flashlight", "binoculars", "telescope", "microscope", "thermometer", 
+    "barometer", "seismometer", "anemometer", "hygrometer", "altimeter", "speedometer", "odometer", "tachometer", 
+    "fuel", "engine", "brake", "steering", "wheel", "tire", "axle", "chassis", "transmission", "radiator",
+    "battery", "exhaust", "suspension", "clutch", "differential", "ignition", "carburetor", "catalyst", "muffler", "windshield", "headlight"
+    "perservance", "quarantine", "entrepreneur", "camouflage"
 ]
 
 # Hard words
