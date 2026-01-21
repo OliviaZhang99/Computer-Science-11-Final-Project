@@ -60,12 +60,12 @@ WORDS_MEDIUM = [
     "barometer", "seismometer", "anemometer", "hygrometer", "altimeter", "speedometer", "odometer", "tachometer", 
     "fuel", "engine", "brake", "steering", "wheel", "tire", "axle", "chassis", "transmission", "radiator",
     "battery", "exhaust", "suspension", "clutch", "differential", "ignition", "carburetor", "catalyst", "muffler", "windshield", "headlight"
-    "perservance", "quarantine", "entrepreneur", "camouflage"
+    "perseverance", "quarantine", "entrepreneur", "camouflage"
 ]
 
 WORDS_HARD = [
     "synchronization", "implementation", "characteristic", "responsibility", "configuration",
-    "interpretation", "communication", "approximation", "compatibility", "visualization", "pomegrante", "mangosteen"
+    "interpretation", "communication", "approximation", "compatibility", "visualization", "pomegranate", "mangosteen"
     "architecture", "authentication", "specification", "optimization", "determination", 
     "transformation", "representation", "administration", "documentation", "identification",
     "international", "mathematical", "environmental", "organizational", "philosophical",
@@ -159,7 +159,7 @@ def count_correct_chars(typed, target):
             correct = correct + 1
         i = i + 1
 
-    # Return number correct
+    # Return number of correct
     return correct
 
 
@@ -168,8 +168,6 @@ def calculate_wpm(correct_chars, seconds):
     # Avoid dividing by zero
     if seconds <= 0:
         return 0
-
-    # Convert seconds to minutes
     minutes = seconds / 60
 
     # Calculate words typed (5 chars = 1 word)
@@ -178,7 +176,7 @@ def calculate_wpm(correct_chars, seconds):
     # Calculate WPM
     wpm = words_typed / minutes
 
-    # Return rounded number
+    # Return rouned number
     return round(wpm)
 
 
@@ -219,23 +217,21 @@ def refresh_leaderboard():
     # Lock the box again
     leaderboard_box.config(state="disabled")
 
-
-
-# Set difficulty to easy
+# mode: easy
 def set_easy():
     global difficulty
     difficulty = "easy"
     difficulty_label.config(text="Difficulty: easy")
 
 
-# Set difficulty to medium
+# mode: medium
 def set_medium():
     global difficulty
     difficulty = "medium"
     difficulty_label.config(text="Difficulty: medium")
 
 
-# Set difficulty to hard
+# mode: hard
 def set_hard():
     global difficulty
     difficulty = "hard"
@@ -299,7 +295,6 @@ def finish_test():
     wpm = calculate_wpm(correct_chars, seconds)
 
     # Accuracy (based on target length)
-    # Avoid dividing by zero
     if len(target_text) == 0:
         accuracy = 0
     else:
@@ -307,9 +302,7 @@ def finish_test():
 
     # Show results
     message_label.config(
-        text="Time: " + str(round(seconds, 1)) + "s | WPM: " + str(wpm) + " | Accuracy: " + str(accuracy) + "%"
-    )
-
+        text="Time: " + str(round(seconds, 1)) + "s | WPM: " + str(wpm) + " | Accuracy: " + str(accuracy) + "%")
     # Add to leaderboard if a name exists
     name = name_entry.get().strip()
     if name != "":
@@ -318,21 +311,14 @@ def finish_test():
 
     # Reset Start button so it can be used again
     start_btn.config(text="Start", state="normal")
-
-
-    # Stop running
     test_running = False
 
-
-# -----------------------------
-# Build the GUI (tkinter only)
-# -----------------------------
 
 # Create the main window
 root = tk.Tk()
 
 # Set title
-root.title("Typing Test (CS11)")
+root.title("Typing Test")
 
 # Set minimum size
 root.minsize(700, 600)
