@@ -1,0 +1,255 @@
+# Olivia Kelli
+import tkinter as tk
+import random
+import time
+
+FONT = ("Arial", 12)
+FONT_TITLE = ("Arial", 16, "bold")
+PAD_Y = 6
+PAD_X = 8
+WORDS_PER_TEST = 25
+
+# Word lists
+WORDS_EASY = [
+    "book", "they", "begin", "little", "around", "need", "any",
+    "head", "than", "seem", "call", "she", "how",
+    "leave", "off", "find", "if", "get", "skill", "learn",
+    "smile", "point", "flash", "sea", "house", "wash", "baby",
+    "phone", "food", "game", "jump", "kite", "lamp", "moon",
+    "sun", "tree", "cat", "dog", "ball", "hat", "key", "map"
+]
+
+WORDS_MEDIUM = [
+    "keyboard", "computer", "development", "interface", "performance",
+    "accuracy", "challenge", "practice", "improvement", "learning",
+    "calculator", "mathematics", "dramatic", "professional",
+    "backpack", "participants", "terminal", "chemistry",
+    "exercise", "necessary", "intelligence", "psychology",
+    "restaurant", "basketball", "friendship", "adventure"
+]
+
+WORDS_HARD = [
+    "synchronization", "implementation", "characteristic",
+    "responsibility", "configuration", "interpretation",
+    "communication", "approximation", "compatibility",
+    "visualization", "architecture", "authentication",
+    "optimization", "transformation", "documentation",
+    "electromagnetic", "thermodynamics", "bioluminescence",
+    "neuroplasticity", "antidisestablishmentarianism"
+]
+
+difficulty = "easy"
+target_text = ""
+start_time = 0.0
+test_running = False
+
+current_wpm = 0
+current_accuracy = 0
+
+leaderboard = []
+
+def get_word_list():
+    if difficulty == "easy":
+        return WORDS_EASY
+    if difficulty == "medium":
+        return WORDS_MEDIUM
+    return WORDS_HARD
+
+def make_target_text():
+    words = get_word_list()
+    result = []
+    i = 0
+    while i < WORDS_PER_TEST:
+        result.append(random.choice(words))
+        i += 1
+    return " ".join(result)
+
+def count_correct_chars(typed, target):
+    correct = 0
+    i = 0
+    limit = min(len(typed), len(target))
+    while i < limit:
+        if typed[i] == target[i]:
+            correct += 1
+        i += 1
+    return correct
+
+def calculate_wpm(correct_chars, seconds):
+    if seconds <= 0:
+        return 0
+    minutes = seconds / 60
+    return round((correct_chars / 5) / minutes)
+
+def refresh_leaderboard():
+    leaderboard_box.config(state="normal")
+    leaderboard_box.delete("1.0", tk.END)
+
+    sorted_list = leaderboard[:]
+
+    i = 0
+    while i < len(sorted_list):
+        j = 0
+        while j < len(sorted_list) - 1:
+            if sorted_list[j][1] < sorted_list[j + 1][1]:
+                temp = sorted_list[j]
+                sorted_list[j] = sorted_list[j + 1]
+                sorted_list[j + 1] = temp
+            j += 1
+        i += 1
+
+    i = 0
+    rank = 1
+    while i < len(sorted_list) and i < 10:
+        name, wpm, acc, diff = sorted_list[i]
+        leaderboard_box.insert(
+            tk.END,
+            str(rank) + ". " + name +
+            " | WPM: " + str(wpm) +
+            " | Accuracy: " + str(acc) + "%" +
+            " | " + diff.capitalize() + "\n"
+        )
+        rank += 1
+        i += 1
+
+    leaderboard_box.config(state="disabled")
+
+def start_test():
+    global target_text, start_time, test_running
+
+    if test_running:
+        return
+
+    target_text = make_target_text()
+
+    target_display.config(state="normal")
+    target_display.delete("1.0", tk.END)
+    target_display.insert("1.0", target_text)
+    target_display.config(state="disabled")
+
+    input_box.config(state="normal")
+    input_box.delete("1.0", tk.END)
+    input_box.focus()
+
+    message_label.config(text="Typing started. Press Enter when finished.")
+    start_btn.config(text="Running...", state="disabled")
+
+    start_time = time.time()
+    test_running = True
+
+def on_enter(event):
+    if test_running:
+        finish_test()
+        return "break"
+
+def finish_test():
+    global test_running, current_wpm, current_accuracy
+
+    typed = input_box.get("1.0", tk.END).strip()
+    seconds = time.time() - start_time
+
+    correct = count_correct_chars(typed, target_text)
+    current_wpm = calculate_wpm(correct, seconds)
+
+    if len(target_text) > 0:
+        current_accuracy = round((correct / len(target_text)) * 100)
+    else:
+        current_accuracy = 0
+
+    message_label.config(
+        text="Time: " + str(round(seconds, 1)) +
+             "s | WPM: " + str(current_wpm) +
+             " | Accuracy: " + str(current_accuracy) + "%"
+    )
+
+    start_btn.config(text="Start", state="normal")
+    test_running = False
+
+    name = name_entry.get()
+    if name != "":
+        leaderboard.append((name, current_wpm, current_accuracy, difficulty))
+        refresh_leaderboard()
+
+# Makes the difficulty label show the selected word in a highlighted way
+def update_difficulty_label():
+    if difficulty == "easy":
+        difficulty_label.config(text="Difficulty: EASY", fg="blue")
+    elif difficulty == "medium":
+        difficulty_label.config(text="Difficulty: MEDIUM", fg="blue")
+    else:
+        difficulty_label.config(text="Difficulty: HARD", fg="blue")
+
+def set_easy():
+    global difficulty
+    difficulty = "easy"
+    update_difficulty_label()
+    easy_btn.config(bg="lightgrey")
+    medium_btn.config(bg="SystemButtonFace")
+    hard_btn.config(bg="SystemButtonFace")
+
+def set_medium():
+    global difficulty
+    difficulty = "medium"
+    update_difficulty_label()
+    medium_btn.config(bg="lightgrey")
+    easy_btn.config(bg="SystemButtonFace")
+    hard_btn.config(bg="SystemButtonFace")
+
+def set_hard():
+    global difficulty
+    difficulty = "hard"
+    update_difficulty_label()
+    hard_btn.config(bg="lightgrey")
+    easy_btn.config(bg="SystemButtonFace")
+    medium_btn.config(bg="SystemButtonFace")
+
+root = tk.Tk()
+root.title("Typing Test")
+root.minsize(900, 750)
+
+tk.Label(root, text="Typing Test", font=FONT_TITLE).pack(pady=PAD_Y)
+
+name_frame = tk.Frame(root)
+name_frame.pack(pady=PAD_Y)
+
+tk.Label(name_frame, text="Name:", font=FONT).pack(side="left", padx=PAD_X)
+name_entry = tk.Entry(name_frame, font=FONT, width=20)
+name_entry.pack(side="left", padx=PAD_X)
+
+diff_frame = tk.Frame(root)
+diff_frame.pack(pady=PAD_Y)
+
+difficulty_label = tk.Label(diff_frame, text="Difficulty: EASY", font=FONT, fg="blue")
+difficulty_label.pack(side="left", padx=PAD_X)
+
+easy_btn = tk.Button(diff_frame, text="Easy", font=FONT, command=set_easy, bg="lightgrey")
+easy_btn.pack(side="left", padx=PAD_X)
+
+medium_btn = tk.Button(diff_frame, text="Medium", font=FONT, command=set_medium)
+medium_btn.pack(side="left", padx=PAD_X)
+
+hard_btn = tk.Button(diff_frame, text="Hard", font=FONT, command=set_hard)
+hard_btn.pack(side="left", padx=PAD_X)
+
+target_display = tk.Text(root, height=5, width=80, font=FONT)
+target_display.pack(pady=PAD_Y)
+target_display.config(state="disabled")
+
+tk.Label(root, text="Type here:", font=FONT).pack(pady=PAD_Y)
+
+input_box = tk.Text(root, height=10, width=80, font=FONT)
+input_box.pack(pady=PAD_Y)
+input_box.bind("<Return>", on_enter)
+
+start_btn = tk.Button(root, text="Start", font=FONT, command=start_test)
+start_btn.pack(pady=PAD_Y)
+
+message_label = tk.Label(root, text="Click Start to begin.", font=FONT)
+message_label.pack(pady=PAD_Y)
+
+tk.Label(root, text="Leaderboard", font=FONT_TITLE).pack(pady=PAD_Y)
+
+leaderboard_box = tk.Text(root, height=8, width=50, font=FONT)
+leaderboard_box.pack(pady=PAD_Y)
+leaderboard_box.config(state="disabled")
+
+root.mainloop()
