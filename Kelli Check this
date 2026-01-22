@@ -38,6 +38,7 @@ WORDS_HARD = [
     "neuroplasticity", "antidisestablishmentarianism"
 ]
 
+# These variables keep track of what's happening in the program
 difficulty = "easy"
 target_text = ""
 start_time = 0.0
@@ -46,16 +47,30 @@ test_running = False
 current_wpm = 0
 current_accuracy = 0
 
+# Each entry: (name, wpm, accuracy, difficulty)
 leaderboard = []
 
+
 def get_word_list():
+    """
+    () -> list of str
+
+    Returns the list of words that matches the current difficulty.
+    """
     if difficulty == "easy":
         return WORDS_EASY
     if difficulty == "medium":
         return WORDS_MEDIUM
     return WORDS_HARD
 
+
 def make_target_text():
+    """
+    () -> str
+
+    Builds the target text for the typing test by choosing
+    WORDS_PER_TEST random words from the current difficulty list.
+    """
     words = get_word_list()
     result = []
     i = 0
@@ -64,7 +79,14 @@ def make_target_text():
         i += 1
     return " ".join(result)
 
+
 def count_correct_chars(typed, target):
+    """
+    (str, str) -> int
+
+    Counts how many characters are correct in the same position.
+    Stops at the length of the shorter string.
+    """
     correct = 0
     i = 0
     limit = min(len(typed), len(target))
@@ -74,18 +96,34 @@ def count_correct_chars(typed, target):
         i += 1
     return correct
 
+
 def calculate_wpm(correct_chars, seconds):
+    """
+    (int, float) -> int
+
+    Calculates WPM using the standard rule: 5 characters = 1 word.
+    Returns 0 if the time is 0 or negative.
+    """
     if seconds <= 0:
         return 0
     minutes = seconds / 60
     return round((correct_chars / 5) / minutes)
 
+
 def refresh_leaderboard():
+    """
+    () -> None
+
+    Sorts the leaderboard by WPM (highest first) using bubble sort,
+    then displays the top 10 in the leaderboard text box.
+    """
     leaderboard_box.config(state="normal")
     leaderboard_box.delete("1.0", tk.END)
 
+    # Copy so we don’t change the original list order
     sorted_list = leaderboard[:]
 
+    # Bubble sort by WPM (index 1)
     i = 0
     while i < len(sorted_list):
         j = 0
@@ -97,6 +135,7 @@ def refresh_leaderboard():
             j += 1
         i += 1
 
+    # Print top 10
     i = 0
     rank = 1
     while i < len(sorted_list) and i < 10:
@@ -113,40 +152,72 @@ def refresh_leaderboard():
 
     leaderboard_box.config(state="disabled")
 
+
 def start_test():
+    """
+    () -> None
+
+    Starts a new typing test:
+    - Generates a new target text
+    - Clears the input box
+    - Starts the timer
+    """
     global target_text, start_time, test_running
 
+    # Don’t start again if a test is already running
     if test_running:
         return
 
+    # Make new target text
     target_text = make_target_text()
 
+    # Show target text
     target_display.config(state="normal")
     target_display.delete("1.0", tk.END)
     target_display.insert("1.0", target_text)
     target_display.config(state="disabled")
 
+    # Clear typing box and focus it
     input_box.config(state="normal")
     input_box.delete("1.0", tk.END)
     input_box.focus()
 
+    # Update UI
     message_label.config(text="Typing started. Press Enter when finished.")
     start_btn.config(text="Running...", state="disabled")
 
+    # Start timer
     start_time = time.time()
     test_running = True
 
+
 def on_enter(event):
+    """
+    (event) -> str or None
+
+    When the user presses Enter, finish the test if it is running.
+    Returning "break" stops Tkinter from adding a new line in the Text box.
+    """
     if test_running:
         finish_test()
         return "break"
 
+
 def finish_test():
+    """
+    () -> None
+
+    Ends the typing test:
+    - Calculates time, WPM, and accuracy
+    - Shows results
+    - Saves score to leaderboard (if name is not blank)
+    """
     global test_running, current_wpm, current_accuracy
 
     typed = input_box.get("1.0", tk.END).strip()
     seconds = time.time() - start_time
 
+    # Calculate results
     correct = count_correct_chars(typed, target_text)
     current_wpm = calculate_wpm(correct, seconds)
 
@@ -155,22 +226,30 @@ def finish_test():
     else:
         current_accuracy = 0
 
+    # Display results
     message_label.config(
         text="Time: " + str(round(seconds, 1)) +
              "s | WPM: " + str(current_wpm) +
              " | Accuracy: " + str(current_accuracy) + "%"
     )
 
+    # Reset button + state
     start_btn.config(text="Start", state="normal")
     test_running = False
 
+    # Save to leaderboard
     name = name_entry.get()
     if name != "":
         leaderboard.append((name, current_wpm, current_accuracy, difficulty))
         refresh_leaderboard()
 
-# Makes the difficulty label show the selected word in a highlighted way
+
 def update_difficulty_label():
+    """
+    () -> None
+
+    Updates the difficulty label so it looks highlighted (blue + uppercase).
+    """
     if difficulty == "easy":
         difficulty_label.config(text="Difficulty: EASY", fg="blue")
     elif difficulty == "medium":
@@ -178,36 +257,61 @@ def update_difficulty_label():
     else:
         difficulty_label.config(text="Difficulty: HARD", fg="blue")
 
+
 def set_easy():
+    """
+    () -> None
+
+    Sets difficulty to easy and updates the button highlighting.
+    """
     global difficulty
     difficulty = "easy"
     update_difficulty_label()
+
     easy_btn.config(bg="lightgrey")
     medium_btn.config(bg="SystemButtonFace")
     hard_btn.config(bg="SystemButtonFace")
 
+
 def set_medium():
+    """
+    () -> None
+
+    Sets difficulty to medium and updates the button highlighting.
+    """
     global difficulty
     difficulty = "medium"
     update_difficulty_label()
+
     medium_btn.config(bg="lightgrey")
     easy_btn.config(bg="SystemButtonFace")
     hard_btn.config(bg="SystemButtonFace")
 
+
 def set_hard():
+    """
+    () -> None
+
+    Sets difficulty to hard and updates the button highlighting.
+    """
     global difficulty
     difficulty = "hard"
     update_difficulty_label()
+
     hard_btn.config(bg="lightgrey")
     easy_btn.config(bg="SystemButtonFace")
     medium_btn.config(bg="SystemButtonFace")
 
+
+#GUI
 root = tk.Tk()
 root.title("Typing Test")
 root.minsize(900, 750)
 
+# Title
 tk.Label(root, text="Typing Test", font=FONT_TITLE).pack(pady=PAD_Y)
 
+# Name area
 name_frame = tk.Frame(root)
 name_frame.pack(pady=PAD_Y)
 
@@ -215,6 +319,7 @@ tk.Label(name_frame, text="Name:", font=FONT).pack(side="left", padx=PAD_X)
 name_entry = tk.Entry(name_frame, font=FONT, width=20)
 name_entry.pack(side="left", padx=PAD_X)
 
+# Difficulty buttons
 diff_frame = tk.Frame(root)
 diff_frame.pack(pady=PAD_Y)
 
@@ -230,22 +335,27 @@ medium_btn.pack(side="left", padx=PAD_X)
 hard_btn = tk.Button(diff_frame, text="Hard", font=FONT, command=set_hard)
 hard_btn.pack(side="left", padx=PAD_X)
 
+# Target text (what the user has to type)
 target_display = tk.Text(root, height=5, width=80, font=FONT)
 target_display.pack(pady=PAD_Y)
 target_display.config(state="disabled")
 
 tk.Label(root, text="Type here:", font=FONT).pack(pady=PAD_Y)
 
+# Typing box
 input_box = tk.Text(root, height=10, width=80, font=FONT)
 input_box.pack(pady=PAD_Y)
 input_box.bind("<Return>", on_enter)
 
+# Start button
 start_btn = tk.Button(root, text="Start", font=FONT, command=start_test)
 start_btn.pack(pady=PAD_Y)
 
+# Results message
 message_label = tk.Label(root, text="Click Start to begin.", font=FONT)
 message_label.pack(pady=PAD_Y)
 
+# Leaderboard
 tk.Label(root, text="Leaderboard", font=FONT_TITLE).pack(pady=PAD_Y)
 
 leaderboard_box = tk.Text(root, height=8, width=50, font=FONT)
