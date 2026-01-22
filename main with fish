@@ -1,4 +1,3 @@
-
 # Olivia Kelli
 import tkinter as tk
 import random
@@ -10,77 +9,33 @@ PAD_Y = 6
 PAD_X = 8
 WORDS_PER_TEST = 25
 
-
-# Word (easy, medium and hard)
+# Word lists
 WORDS_EASY = [
     "book", "they", "begin", "little", "around", "need", "any",
     "head", "than", "seem", "call", "she", "how",
-    "leave", "off", "find", "if", "get", "skill", "learn", "smile", "point", "flash"
-    "sea", "see", "house", "hole", "wash", "hand", "each", "baby", "phone", "flask"
-    "chord", "food", "game", "jump", "kite", "lamp", "moon", "nest", "owl", "pig", "queen", 
-    "rat", "sun", "tree", "van", "wolf", "xray", "yarn", "zebra", "ant", "ball", "cat", "dog", "egg", 
-    "fan", "goat", "hat", "ice", "jar", "key", "log", "map", "net", "oak", "pan", "quilt", 
-    "red", "sit", "top", "urn", "vase", "wig", "zip", "banana", "apple", "grape", "orange", "peach",
-    "pear", "plum", "mango", "melon", "kiwi", "lime", "cherry", "berry", "coconut", "date", "fig", "guava", 
-    "hand", "jelly", "lemon", "nut", "olive", "papaya", "quince", "raisin", "one", "two", "three", "four", "five",
-    "six", "seven", "eight", "nine", "ten", "red", "blue", "green", "yellow", "purple", "orange", "black", "white", "gray", "pink", 
-    "brown", "cyan", "magenta", "silver", "gold", "bronze", "circle", "square", "triangle", "rectangle", "oval", "star", "heart", 
-    "diamond", "arrow", "cloud", "rain", "snow", "sun", "wind", "storm", "fog", "hail", "lightning", "thunder", 
-    "river", "mountain", "forest", "desert", "ocean", "island", "valley", "canyon", "waterfall", "beach", "cliff", "cave", 
-    "field", "meadow", "glacier", "volcano", "jungle", "swamp", "marsh", "lagoon", "reef", "delta", 
-    "bay", "gulf", "cape", "peninsula", "isthmus", "plateau", "prairie", "savanna", "tundra", "steppe", 
-    "jacket", "shirt", "pants", "shoes", "socks", "hat", "gloves", "scarf", "belt", "tie", "dress", "skirt", "sneakers", "boots", 
-    "sandals", "slippers", "suit", "uniform", "apron", "cape", "hood", "pyjamas", "robe", "vest", "watch", "bracelet", "necklace", "ring",
-    
+    "leave", "off", "find", "if", "get", "skill", "learn",
+    "smile", "point", "flash", "sea", "house", "wash", "baby",
+    "phone", "food", "game", "jump", "kite", "lamp", "moon",
+    "sun", "tree", "cat", "dog", "ball", "hat", "key", "map"
 ]
 
 WORDS_MEDIUM = [
-    "keyboard", "computer", "potato", "development", "interface", "performance",
-    "accuracy", "increase", "challenge", "practice", "improvement", "develop", "learning",
-    "volcano", "calculator", "extinguisher", "cylinder", "mathematics", "children", "master", "minimum", 
-    "horror", "dramatic", "professional", "sanitizer", "backpack", "participants", "terminal",
-    "keyboard", "dramatic", "professional", "sanitizer", "backpack", "participants", "terminal",
-    "social", "mountain", "chemistry", "winter", "summer", "alarm", "brother", "exercise", "monopolies", 
-    "onomatopoeia", "platinum", "quarantine", "sphinx", "tattoo", "vortex", "waltz", "xylophone", "pronunciation"
-    "necessary", "intelligence", "spaghetti", "consciousness", "vacuum", "lightning", "contagious",
-    "exaggerate", "fluorescent", "psychology", "restaurant", "basketball", "friendship", "adventure",
-    "butterfly", "chocolate", "dinosaur", "elephant", "fireworks", "giraffe", "helicopter",
-    "imagination", "jellyfish", "kangaroo", "lighthouse", "motorcycle", "nightmare", "orchestra",
-    "pineapple", "quicksand", "rollercoaster", "spaceship", "tornado", "unicorn", "volleyball", 
-    "waterfall", "yesterday", "zookeeper", "alligator", "balloon", "caterpillar", "dolphin", "earthquake",
-    "fountain", "grasshopper", "hurricane", "jigsaw", "koala", "labrador", "marshmallow", "nectarine",
-    "octopus", "popsicle", "quokka", "rhinoceros", "saxophone", "toothbrush", "umbrella", "vegetable",
-    "whirlpool", "xenophobia", "yogurt", "zeppelin", "adventure", "bicycle", "carnival", "dandelion", "evergreen",
-    "earrings", "crown", "tiara", "glasses", "sunglasses", "backpack", "purse", "wallet", "briefcase", "luggage", "umbrella",
-    "camera", "phone", "tablet", "laptop", "desktop", "monitor", "keyboard", "mouse", "printer", "scanner", 
-    "speaker", "headphones", "microphone", "charger", "cable", "adapter", "router", "modem", "projector", "television", 
-    "radio", "clock", "calendar", "map", "compass", "flashlight", "binoculars", "telescope", "microscope", "thermometer", 
-    "barometer", "seismometer", "anemometer", "hygrometer", "altimeter", "speedometer", "odometer", "tachometer", 
-    "fuel", "engine", "brake", "steering", "wheel", "tire", "axle", "chassis", "transmission", "radiator",
-    "battery", "exhaust", "suspension", "clutch", "differential", "ignition", "carburetor", "catalyst", "muffler", "windshield", "headlight"
-    "perseverance", "quarantine", "entrepreneur", "camouflage"
+    "keyboard", "computer", "development", "interface", "performance",
+    "accuracy", "challenge", "practice", "improvement", "learning",
+    "calculator", "mathematics", "dramatic", "professional",
+    "backpack", "participants", "terminal", "chemistry",
+    "exercise", "necessary", "intelligence", "psychology",
+    "restaurant", "basketball", "friendship", "adventure"
 ]
 
 WORDS_HARD = [
-    "synchronization", "implementation", "characteristic", "responsibility", "configuration",
-    "interpretation", "communication", "approximation", "compatibility", "visualization", "pomegranate", "mangosteen"
-    "architecture", "authentication", "specification", "optimization", "determination", 
-    "transformation", "representation", "administration", "documentation", "identification",
-    "international", "mathematical", "environmental", "organizational", "philosophical",
-    "psychological", "technological", "unconstitutional", "extraordinary", "incomprehensible",
-    "disproportionate", "misinterpretation", "counterproductive", "overqualification", "hyperventilation",
-    "photosynthesis", "neurotransmitter", "electromagnetic", "thermodynamics", "microenvironment",
-    "bioluminescence", "cybersecurity", "neuroplasticity", "psychopharmacology", "radiotelemetry", 
-    "spectrophotometer", "thermoregulation", "transcendental", "vulnerability", "weatherization",
-    "xenotransplantation", "youthfulness", "zoogeographical", "conceptualization", "decontamination",
-    "electroencephalogram", "gastroenterological", "heterogeneousness", "immunohistochemistry",
-    "jurisprudential", "kaleidoscopically", "lexicographically", "microarchitectural", "neurodegenerative",
-    "ophthalmologically", "psychosomatically", "quasiperiodically", "radiocontractility",
-    "spectrophotometrically", "thermoelectrically", "ultramicroscopically", "voluntaristically", 
-    "weatherproofing", "xerophthalmias", "yesteryear's", "zoophilously", "antidisestablishmentarianism",
-    "floccinaucinihilipilification", "pseudopseudohypoparathyroidism", "thyroparathyroidectomized",
-    "hepaticocholangiogastrostomy", "spectrophotofluorometrically", "psychoneuroendocrinological", 
-    "radioimmunoelectrophoresis", "immunoelectrophoretically", "electroencephalographically",
+    "synchronization", "implementation", "characteristic",
+    "responsibility", "configuration", "interpretation",
+    "communication", "approximation", "compatibility",
+    "visualization", "architecture", "authentication",
+    "optimization", "transformation", "documentation",
+    "electromagnetic", "thermodynamics", "bioluminescence",
+    "neuroplasticity", "antidisestablishmentarianism"
 ]
 
 difficulty = "easy"
@@ -89,23 +44,10 @@ start_time = 0.0
 test_running = False
 
 current_wpm = 0
-current_catch_time = 0.0
+current_accuracy = 0
 
-fish_chase_running = False
-fish_chase_start_time = 0.0
-
-fish_id = None
-fish_dx = 0
-fish_dy = 0
-
-fish_img = None
-
-# leaderboard entries: (name, wpm, catch_time, difficulty)
 leaderboard = []
 
-# -----------------------------
-# WORD LIST PICKER
-# -----------------------------
 def get_word_list():
     if difficulty == "easy":
         return WORDS_EASY
@@ -113,62 +55,64 @@ def get_word_list():
         return WORDS_MEDIUM
     return WORDS_HARD
 
-#list of random words
 def make_target_text():
     words = get_word_list()
-    temp = []
+    result = []
     i = 0
     while i < WORDS_PER_TEST:
-        temp.append(random.choice(words))
+        result.append(random.choice(words))
         i += 1
-    return " ".join(temp)
+    return " ".join(result)
 
-#accuracy
 def count_correct_chars(typed, target):
     correct = 0
-    limit = min(len(typed), len(target))
     i = 0
+    limit = min(len(typed), len(target))
     while i < limit:
         if typed[i] == target[i]:
             correct += 1
         i += 1
     return correct
 
-# calculate wpm
 def calculate_wpm(correct_chars, seconds):
     if seconds <= 0:
         return 0
     minutes = seconds / 60
-    words_typed = correct_chars / 5
-    return round(words_typed / minutes)
+    return round((correct_chars / 5) / minutes)
 
-#update leaderboard
 def refresh_leaderboard():
     leaderboard_box.config(state="normal")
     leaderboard_box.delete("1.0", tk.END)
 
-    sorted_list = sorted(leaderboard, key=lambda x: x[1], reverse=True)
+    sorted_list = leaderboard[:]
 
-    for i, entry in enumerate(sorted_list[:10]):
-        name, wpm, catch_time, diff = entry
+    i = 0
+    while i < len(sorted_list):
+        j = 0
+        while j < len(sorted_list) - 1:
+            if sorted_list[j][1] < sorted_list[j + 1][1]:
+                temp = sorted_list[j]
+                sorted_list[j] = sorted_list[j + 1]
+                sorted_list[j + 1] = temp
+            j += 1
+        i += 1
+
+    i = 0
+    rank = 1
+    while i < len(sorted_list) and i < 10:
+        name, wpm, acc, diff = sorted_list[i]
         leaderboard_box.insert(
             tk.END,
-            f"{i+1}. {name} | WPM: {wpm} | Catch: {round(catch_time, 2)}s | {diff.capitalize()}\n"
+            str(rank) + ". " + name +
+            " | WPM: " + str(wpm) +
+            " | Accuracy: " + str(acc) + "%" +
+            " | " + diff.capitalize() + "\n"
         )
+        rank += 1
+        i += 1
 
     leaderboard_box.config(state="disabled")
 
-#results
-def show_results():
-    results_label.config(
-        text=(
-            "🐟 Results 🐟\n"
-            f"{name_entry.get()} | WPM: {current_wpm} | "
-            f"Catch: {round(current_catch_time, 2)}s | {difficulty.capitalize()}"
-        )
-    )
-
-#star test
 def start_test():
     global target_text, start_time, test_running
 
@@ -182,192 +126,130 @@ def start_test():
     target_display.insert("1.0", target_text)
     target_display.config(state="disabled")
 
-    input_box.delete(0, tk.END)
-    message_label.config(text="Test started! Type, then press Enter.")
+    input_box.config(state="normal")
+    input_box.delete("1.0", tk.END)
+    input_box.focus()
+
+    message_label.config(text="Typing started. Press Enter when finished.")
     start_btn.config(text="Running...", state="disabled")
 
     start_time = time.time()
     test_running = True
-#fusg test
+
 def on_enter(event):
     if test_running:
         finish_test()
+        return "break"
 
-#fish game
-def start_fish_chase():
-    global fish_chase_running, fish_chase_start_time
-    global fish_id, fish_dx, fish_dy
-
-    fish_chase_running = True
-    fish_chase_start_time = time.time()
-
-    canvas.delete("all")
-
-    c_width = canvas.winfo_width()
-    c_height = canvas.winfo_height()
-
-    start_x = c_width // 2
-    start_y = c_height // 2
-
-    fish_id = canvas.create_image(start_x, start_y, image=fish_img)
-    canvas.tag_bind(fish_id, "<Button-1>", catch_fish)
-
-    speed = max(4, min(20, 6 + current_wpm // 10))
-    fish_dx = speed
-    fish_dy = speed
-
-    move_fish()
-
-#fish movement
-def move_fish():
-    global fish_dx, fish_dy
-
-    if not fish_chase_running:
-        return
-
-    c_width = canvas.winfo_width()
-    c_height = canvas.winfo_height()
-
-    x, y = canvas.coords(fish_id)
-
-    canvas.move(fish_id, fish_dx, fish_dy)
-
-    x, y = canvas.coords(fish_id)
-
-    half_w = 60
-    half_h = 45
-
-    if x - half_w < 0:
-        fish_dx = abs(fish_dx)
-    if x + half_w > c_width:
-        fish_dx = -abs(fish_dx)
-    if y - half_h < 0:
-        fish_dy = abs(fish_dy)
-    if y + half_h > c_height:
-        fish_dy = -abs(fish_dy)
-
-    root.after(40, move_fish)
-
-#catch fish
-def catch_fish(event):
-    global fish_chase_running, current_catch_time
-
-    if not fish_chase_running:
-        return
-
-    fish_chase_running = False
-    current_catch_time = time.time() - fish_chase_start_time
-
-    message_label.config(
-        text=f"Caught in {round(current_catch_time, 2)}s! WPM was {current_wpm}"
-    )
-
-    name = name_entry.get().strip()
-    if name != "":
-        leaderboard.append((name, current_wpm, current_catch_time, difficulty))
-        refresh_leaderboard()
-
-    show_results()
-
-#finish test
 def finish_test():
-    global test_running, current_wpm
+    global test_running, current_wpm, current_accuracy
 
-    if not test_running:
-        return
-
-    typed = input_box.get()
+    typed = input_box.get("1.0", tk.END).strip()
     seconds = time.time() - start_time
 
-    correct_chars = count_correct_chars(typed, target_text)
-    current_wpm = calculate_wpm(correct_chars, seconds)
+    correct = count_correct_chars(typed, target_text)
+    current_wpm = calculate_wpm(correct, seconds)
 
-    accuracy = round((correct_chars / len(target_text)) * 100) if len(target_text) > 0 else 0
+    if len(target_text) > 0:
+        current_accuracy = round((correct / len(target_text)) * 100)
+    else:
+        current_accuracy = 0
 
     message_label.config(
-        text=f"Time: {round(seconds,1)}s | WPM: {current_wpm} | Accuracy: {accuracy}%"
+        text="Time: " + str(round(seconds, 1)) +
+             "s | WPM: " + str(current_wpm) +
+             " | Accuracy: " + str(current_accuracy) + "%"
     )
 
     start_btn.config(text="Start", state="normal")
     test_running = False
 
-    start_fish_chase()
+    name = name_entry.get()
+    if name != "":
+        leaderboard.append((name, current_wpm, current_accuracy, difficulty))
+        refresh_leaderboard()
 
-#game interface
+# Makes the difficulty label show the selected word in a highlighted way
+def update_difficulty_label():
+    if difficulty == "easy":
+        difficulty_label.config(text="Difficulty: EASY", fg="blue")
+    elif difficulty == "medium":
+        difficulty_label.config(text="Difficulty: MEDIUM", fg="blue")
+    else:
+        difficulty_label.config(text="Difficulty: HARD", fg="blue")
+
+def set_easy():
+    global difficulty
+    difficulty = "easy"
+    update_difficulty_label()
+    easy_btn.config(bg="lightgrey")
+    medium_btn.config(bg="SystemButtonFace")
+    hard_btn.config(bg="SystemButtonFace")
+
+def set_medium():
+    global difficulty
+    difficulty = "medium"
+    update_difficulty_label()
+    medium_btn.config(bg="lightgrey")
+    easy_btn.config(bg="SystemButtonFace")
+    hard_btn.config(bg="SystemButtonFace")
+
+def set_hard():
+    global difficulty
+    difficulty = "hard"
+    update_difficulty_label()
+    hard_btn.config(bg="lightgrey")
+    easy_btn.config(bg="SystemButtonFace")
+    medium_btn.config(bg="SystemButtonFace")
+
 root = tk.Tk()
-root.title("Typing Test with Swimming Fish")
-root.minsize(800, 750)
+root.title("Typing Test")
+root.minsize(900, 750)
 
-title_label = tk.Label(root, text="Typing Test", font=FONT_TITLE)
-title_label.pack(pady=PAD_Y)
+tk.Label(root, text="Typing Test", font=FONT_TITLE).pack(pady=PAD_Y)
 
 name_frame = tk.Frame(root)
 name_frame.pack(pady=PAD_Y)
 
-name_label = tk.Label(name_frame, text="Name:", font=FONT)
-name_label.pack(side="left", padx=PAD_X)
-
-name_entry = tk.Entry(name_frame, font=FONT, width=18)
+tk.Label(name_frame, text="Name:", font=FONT).pack(side="left", padx=PAD_X)
+name_entry = tk.Entry(name_frame, font=FONT, width=20)
 name_entry.pack(side="left", padx=PAD_X)
 
 diff_frame = tk.Frame(root)
 diff_frame.pack(pady=PAD_Y)
 
-difficulty_label = tk.Label(diff_frame, text="Difficulty: easy", font=FONT)
+difficulty_label = tk.Label(diff_frame, text="Difficulty: EASY", font=FONT, fg="blue")
 difficulty_label.pack(side="left", padx=PAD_X)
 
-def set_easy():
-    global difficulty
-    difficulty = "easy"
-    difficulty_label.config(text="Difficulty: easy")
+easy_btn = tk.Button(diff_frame, text="Easy", font=FONT, command=set_easy, bg="lightgrey")
+easy_btn.pack(side="left", padx=PAD_X)
 
-def set_medium():
-    global difficulty
-    difficulty = "medium"
-    difficulty_label.config(text="Difficulty: medium")
+medium_btn = tk.Button(diff_frame, text="Medium", font=FONT, command=set_medium)
+medium_btn.pack(side="left", padx=PAD_X)
 
-def set_hard():
-    global difficulty
-    difficulty = "hard"
-    difficulty_label.config(text="Difficulty: hard")
+hard_btn = tk.Button(diff_frame, text="Hard", font=FONT, command=set_hard)
+hard_btn.pack(side="left", padx=PAD_X)
 
-tk.Button(diff_frame, text="Easy", font=FONT, command=set_easy).pack(side="left", padx=PAD_X)
-tk.Button(diff_frame, text="Medium", font=FONT, command=set_medium).pack(side="left", padx=PAD_X)
-tk.Button(diff_frame, text="Hard", font=FONT, command=set_hard).pack(side="left", padx=PAD_X)
-
-target_display = tk.Text(root, height=6, width=60, font=FONT)
+target_display = tk.Text(root, height=5, width=80, font=FONT)
 target_display.pack(pady=PAD_Y)
 target_display.config(state="disabled")
 
-input_label = tk.Label(root, text="Type here:", font=FONT)
-input_label.pack(pady=PAD_Y)
+tk.Label(root, text="Type here:", font=FONT).pack(pady=PAD_Y)
 
-input_box = tk.Entry(root, font=FONT, width=60)
+input_box = tk.Text(root, height=10, width=80, font=FONT)
 input_box.pack(pady=PAD_Y)
 input_box.bind("<Return>", on_enter)
 
-btn_frame = tk.Frame(root)
-btn_frame.pack(pady=PAD_Y)
-
-start_btn = tk.Button(btn_frame, text="Start", font=FONT, command=start_test)
-start_btn.pack(side="left", padx=PAD_X)
+start_btn = tk.Button(root, text="Start", font=FONT, command=start_test)
+start_btn.pack(pady=PAD_Y)
 
 message_label = tk.Label(root, text="Click Start to begin.", font=FONT)
 message_label.pack(pady=PAD_Y)
 
-canvas = tk.Canvas(root, width=700, height=300, bg="lightblue")
-canvas.pack(pady=PAD_Y)
+tk.Label(root, text="Leaderboard", font=FONT_TITLE).pack(pady=PAD_Y)
 
-results_label = tk.Label(root, text="", font=("Arial", 14, "bold"))
-results_label.pack(pady=PAD_Y)
-
-leader_label = tk.Label(root, text="Leaderboard", font=FONT_TITLE)
-leader_label.pack(pady=PAD_Y)
-
-leaderboard_box = tk.Text(root, height=8, width=40, font=FONT)
+leaderboard_box = tk.Text(root, height=8, width=50, font=FONT)
 leaderboard_box.pack(pady=PAD_Y)
 leaderboard_box.config(state="disabled")
-
-fish_img = tk.PhotoImage(file="fish.png")
 
 root.mainloop()
